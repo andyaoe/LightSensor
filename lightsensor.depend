@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1475265901 source:c:\projects\lightsensor\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	"ftd2xx.h"
+	"libMPSSE_i2c.h"
+
+1475265753 c:\projects\lightsensor\ftd2xx.h
+
+1475265753 c:\projects\lightsensor\libmpsse_i2c.h
+	"ftd2xx.h"
+
