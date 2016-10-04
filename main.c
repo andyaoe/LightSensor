@@ -159,7 +159,7 @@ ChannelConfig channelConf;
 FT_STATUS status;
 uint8 buffer[I2C_DEVICE_BUFFER_SIZE];
 uint8 _integration = TSL2591_INTEGRATIONTIME_600MS;
-uint8 _gain        = TSL2591_GAIN_MED;
+uint8 _gain        = TSL2591_GAIN_LOW;
 
 /******************************************************************************/
 /*						Public function definitions						  		   */
@@ -279,9 +279,9 @@ uint32 getFullLuminosity (void)
   }
 
   uint32 x;
-  x = read16(TSL2591_COMMAND_BIT | TSL2591_REGISTER_CHAN1_LOW);
+  x = read16(TSL2591_COMMAND_BIT | TSL2591_REGISTER_CHAN1_LOW); //IR
   x <<= 16;
-  x |= read16(TSL2591_COMMAND_BIT | TSL2591_REGISTER_CHAN0_LOW);
+  x |= read16(TSL2591_COMMAND_BIT | TSL2591_REGISTER_CHAN0_LOW); //IR + VISIBLE
 
   return x;
 }
@@ -380,6 +380,7 @@ int main()
         {
             // get counts
             printf("IR counts: %u\n", getLuminosity(TSL2591_INFRARED));
+            //printf("IR counts: %u\n", getLuminosity(TSL2591_VISIBLE));
         }
 
 
