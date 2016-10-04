@@ -55,10 +55,11 @@ encountered \n",__FILE__, __LINE__, __FUNCTION__);exit(1);}else{;}};
 
 
 #define RETRY_COUNT_EEPROM		10	/* number of retries if read/write fails */
-#define CHANNEL_TO_OPEN			1	/*0 for first available channel, 1 for next... */
+#define CHANNEL_TO_OPEN			0	/*0 for first available channel, 1 for next... */
 #define DATA_OFFSET				1
 
-
+#define TSL2591_COMMAND_BIT         (0xA0)    // 1010 0000: bits 7 and 5 for 'command normal'
+#define TSL2591_REGISTER_DEVICE_ID  (0x12)
 
 /******************************************************************************/
 /*								Global variables							  	    */
@@ -86,6 +87,7 @@ uint8 buffer[I2C_DEVICE_BUFFER_SIZE];
  * \note
  * \warning
  */
+
 FT_STATUS write_byte(uint8 slaveAddress, uint8 registerAddress, uint8 data)
 {
 	uint32 bytesToTransfer = 0;
@@ -210,6 +212,11 @@ int main()
 		status = I2C_InitChannel(ftHandle,&channelConf);
 		APP_CHECK_STATUS(status);
 
+        address = TSL2591_COMMAND_BIT | TSL2591_REGISTER_DEVICE_ID;
+        read_byte(0x29, address, &data);
+        printf("data: 0x%x\n", data);
+
+        /*
 		for(address=START_ADDRESS_EEPROM;address<END_ADDRESS_EEPROM;address++)
 		{
 			printf("writing address = %d data = %d", address, \
@@ -237,6 +244,7 @@ int main()
 			printf("reading address %d data read=%d\n",address,data);
 		}
 		status = I2C_CloseChannel(ftHandle);
+		*/
 	}
 
 #ifdef _MSC_VER
