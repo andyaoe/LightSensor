@@ -158,7 +158,7 @@ FT_HANDLE ftHandle;
 ChannelConfig channelConf;
 FT_STATUS status;
 uint8 buffer[I2C_DEVICE_BUFFER_SIZE];
-uint8 _integration = TSL2591_INTEGRATIONTIME_600MS;
+uint8 _integration = TSL2591_INTEGRATIONTIME_100MS;
 uint8 _gain        = TSL2591_GAIN_LOW;
 
 /******************************************************************************/
@@ -376,7 +376,7 @@ int main()
         // Enable the device by setting the control bit to 0x01
         write8(TSL2591_COMMAND_BIT | TSL2591_REGISTER_ENABLE, TSL2591_ENABLE_POWERON | TSL2591_ENABLE_AEN);
 
-        for (uint8 i = 0; i < 200; i++)
+        while(1)
         {
             // get counts
             printf("IR counts: %u\n", getLuminosity(TSL2591_INFRARED));
